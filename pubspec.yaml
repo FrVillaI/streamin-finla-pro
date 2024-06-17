@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_auth: ^5.1.0
   firebase_database: ^11.0.1
+  video_player: ^2.8.7
+  flick_video_player: ^0.8.0
 
 dev_dependencies:
   flutter_test:

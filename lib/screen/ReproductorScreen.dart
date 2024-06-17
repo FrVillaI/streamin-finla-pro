@@ -1,3 +1,4 @@
+import 'package:app_stre_pro_flutter/screen/PlayScreen.dart';
 import 'package:flutter/material.dart';
 
 class PantallaTituloPelicula extends StatelessWidget {
@@ -40,7 +41,8 @@ class PantallaTituloPelicula extends StatelessWidget {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Color.fromRGBO(0, 0, 0, 0.5), // Color semitransparente (ajusta el último valor para la opacidad)
+            color: Color.fromRGBO(0, 0, 0,
+                0.5), // Color semitransparente (ajusta el último valor para la opacidad)
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -87,7 +89,11 @@ class PantallaTituloPelicula extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () {
-                          // Acción para reproducir la película
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Play()),
+                          );
                         },
                         icon: const Icon(Icons.play_arrow),
                         label: const Text('Reproducir'),
