@@ -1,4 +1,5 @@
 import 'package:app_stre_pro_flutter/screen/Contenidos.dart';
+import 'package:app_stre_pro_flutter/screen/ListConScreen.dart';
 import 'package:app_stre_pro_flutter/screen/RegistroScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -151,7 +152,7 @@ void AlertaLogin(BuildContext context) {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Contenidos()),
+                MaterialPageRoute(builder: (context) => ListaCon()),
               );
             },
             child: const Text('Ver Pliculas'),

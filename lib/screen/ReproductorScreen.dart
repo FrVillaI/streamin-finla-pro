@@ -92,7 +92,10 @@ class PantallaTituloPelicula extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Play()),
+                                builder: (context) => Play(
+                                  titulo: this.titulo,
+                                  url :this.url
+                                )),
                           );
                         },
                         icon: const Icon(Icons.play_arrow),

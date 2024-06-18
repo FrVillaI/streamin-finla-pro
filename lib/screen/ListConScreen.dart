@@ -1,12 +1,15 @@
+import 'package:flick_video_player/flick_video_player.dart';
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:app_stre_pro_flutter/Pelicula.dart';
 import 'package:app_stre_pro_flutter/screen/ReproductorScreen.dart';
-import 'package:flutter/material.dart';
 import 'package:app_stre_pro_flutter/Peliculas.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Asegura que los Widgets estén inicializados
-  await Firebase.initializeApp(); // Inicializa Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const ListaCon());
 }
 
@@ -16,6 +19,7 @@ class ListaCon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const Home(),
     );
   }
@@ -53,7 +57,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista'),
+        title: const Text('Peliculas Disponibles'),
       ),
       body: FutureBuilder<List<Pelicula>>(
         future: _futurePeliculas,
@@ -92,17 +96,91 @@ class _HomeState extends State<Home> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PantallaTituloPelicula(
-                titulo: pelicula.titulo,
-                descripcion: pelicula.descripcion,
-                categoria: pelicula.categoria,
-                duracion: pelicula.duracion,
-                poster: pelicula.poster,
+              builder: (context) => Play(
                 url: pelicula.url,
+                titulo: pelicula.titulo,
               ),
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class Play extends StatefulWidget {
+  final String titulo;
+  final String url;
+
+  const Play({Key? key, required this.url, required this.titulo}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _PlayState();
+}
+
+class _PlayState extends State<Play> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawerEnableOpenDragGesture: false,
+      appBar: AppBar(
+        title: Text(widget.titulo),
+      ),
+      body: Stack(
+        children: [
+          HomePlayer(url: widget.url),
+        ],
+      ),
+    );
+  }
+}
+
+class HomePlayer extends StatefulWidget {
+  final String url;
+
+  const HomePlayer({super.key, required this.url});
+
+  @override
+  State<HomePlayer> createState() => _HomePlayerState();
+}
+
+class _HomePlayerState extends State<HomePlayer> {
+  late FlickManager flickManager;
+
+  @override
+  void initState() {
+    super.initState();
+    flickManager = FlickManager(
+      videoPlayerController: VideoPlayerController.network(widget.url),
+    );
+    flickManager.flickControlManager!.addListener(_handleFullScreen);
+  }
+
+  void _handleFullScreen() {
+    if (flickManager.flickControlManager!.isFullscreen) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+  }
+
+  @override
+  void dispose() {
+    flickManager.flickControlManager!.removeListener(_handleFullScreen);
+    flickManager.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: FlickVideoPlayer(
+            flickManager: flickManager,
+          ),
+        ),
       ),
     );
   }
