@@ -1,4 +1,3 @@
-import 'package:app_stre_pro_flutter/screen/Formulario.dart';
 import 'package:app_stre_pro_flutter/screen/LoginScreen.dart';
 import 'package:app_stre_pro_flutter/screen/RegistroScreen.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,6 @@ Widget Body(context) {
           LoginButton(context),
           const SizedBox(height: 16.0),
           RegistroButton(context),
-          FormuButton(context)
         ],
       ),
     ),
@@ -103,24 +101,6 @@ Widget RegistroButton(context) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Registro()),
-      );
-    },
-    child: const Text(
-      'Registrarse',
-      style: TextStyle(color: Colors.white), // Color del texto blanco
-    ),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black, // Color del botón negro
-    ),
-  );
-}
-
-Widget FormuButton(context) {
-  return ElevatedButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Formu()),
       );
     },
     child: const Text(

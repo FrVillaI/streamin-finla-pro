@@ -115,10 +115,10 @@ Widget LoginButton(context) {
     },
     child: const Text(
       'Iniciar Sesión',
-      style: TextStyle(color: Colors.white), // Color del texto
+      style: TextStyle(color: Colors.white), 
     ),
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black, // Color del botón 
+      backgroundColor: Colors.black, 
     ),
   );
 }
@@ -133,10 +133,10 @@ Widget RegistroButton(context) {
     },
     child: const Text(
       'Registrarse',
-      style: TextStyle(color: Colors.white), // Color del texto 
+      style: TextStyle(color: Colors.white),  
     ),
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black, // Color del botón 
+      backgroundColor: Colors.black, 
     ),
   );
 }
